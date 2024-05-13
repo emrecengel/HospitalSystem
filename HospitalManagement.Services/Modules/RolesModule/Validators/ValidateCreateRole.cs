@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using HospitalManagement.Services.Modules.RolesModule.Commands;
 using HospitalManagement.Services.Modules.RolesModule.Models;
 using HospitalManagement.Services.Resources;
 
 namespace HospitalManagement.Services.Modules.RolesModule.Validators;
 
-internal class ValidateCreateRole : AbstractValidator<Role>
+internal class ValidateCreateRole : AbstractValidator<CreateRole>
 {
     public ValidateCreateRole()
     {

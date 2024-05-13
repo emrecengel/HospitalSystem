@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using HospitalManagement.Services.DatabaseRepository;
+using HospitalManagement.Services.Modules.DoctorsModule.Commands;
 using HospitalManagement.Services.Modules.DoctorsModule.Models;
 using HospitalManagement.Services.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Services.Modules.DoctorsModule.Validators;
 
-internal class ValidateUpdateDoctor : AbstractValidator<Doctor>
+internal class ValidateUpdateDoctor : AbstractValidator<UpdateDoctor>
 {
     public ValidateUpdateDoctor(IRepository<Doctor> repository)
     {

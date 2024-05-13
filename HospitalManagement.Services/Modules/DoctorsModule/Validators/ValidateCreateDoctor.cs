@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using HospitalManagement.Services.Modules.DoctorsModule.Commands;
 using HospitalManagement.Services.Modules.DoctorsModule.Models;
 using HospitalManagement.Services.Resources;
 
 namespace HospitalManagement.Services.Modules.DoctorsModule.Validators;
 
-internal class ValidateCreateDoctor : AbstractValidator<Doctor>
+internal class ValidateCreateDoctor : AbstractValidator<CreateDoctor>
 {
     public ValidateCreateDoctor()
     {

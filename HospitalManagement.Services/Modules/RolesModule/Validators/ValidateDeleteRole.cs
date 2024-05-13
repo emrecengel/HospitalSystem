@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using HospitalManagement.Services.DatabaseRepository;
+using HospitalManagement.Services.Modules.RolesModule.Commands;
 using HospitalManagement.Services.Modules.RolesModule.Models;
 using HospitalManagement.Services.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Services.Modules.RolesModule.Validators;
 
-internal class ValidateDeleteRole : AbstractValidator<Role>
+internal class ValidateDeleteRole : AbstractValidator<DeleteRole>
 {
     public ValidateDeleteRole(IRepository<Role> repository)
     {

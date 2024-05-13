@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using HospitalManagement.Services.Modules.PatientsModule.Commands;
 using HospitalManagement.Services.Modules.PatientsModule.Models;
 using HospitalManagement.Services.Resources;
 
 namespace HospitalManagement.Services.Modules.PatientsModule.Validators;
 
-internal class ValidateCreatePatient : AbstractValidator<Patient>
+internal class ValidateCreatePatient : AbstractValidator<CreatePatient>
 {
     public ValidateCreatePatient()
     {
