@@ -1,0 +1,15 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "Hospital DB",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "root",
+            "Password": "password",
+            "SSLMode": "prefer",
+            "DBRestriction": "hospital_db"
+        }
+    }
+}
