@@ -43,30 +43,54 @@ internal sealed class Repository<T> : IRepository<T>
         entry.State = EntityState.Modified;
 
         var currentValues = await entry.GetDatabaseValuesAsync();
+        
+        if (currentValues != default) 
+            entry.OriginalValues.SetValues(currentValues);
 
-        if (currentValues != default) entry.OriginalValues.SetValues(currentValues);
 
+        var properties = entry.Properties.Where(p => p.IsModified).ToList();
 
-        foreach (var property in entry.Properties)
+        foreach (var property in properties)
         {
-            if (property?.OriginalValue == null && property?.CurrentValue == null) property.IsModified = true;
+            if (property.OriginalValue == null && property.CurrentValue == null) property.IsModified = true;
 
-            if (property is { IsModified: true, CurrentValue: null, OriginalValue: not null })
+            if (property.IsModified && property.CurrentValue == null && property.OriginalValue != null)
                 property.IsModified = true;
 
-            if (property is { IsModified: true, CurrentValue: null, OriginalValue: null })
+            if (property.IsModified && property.CurrentValue == null && property.OriginalValue == null)
                 property.IsModified = false;
 
-            if (property.IsModified && property?.OriginalValue == property?.CurrentValue) property.IsModified = false;
+            if (property.IsModified && property.OriginalValue == property.CurrentValue) property.IsModified = false;
 
-            if (property.IsModified && property is { OriginalValue: not null, CurrentValue: not null } &&
+            if (property.IsModified && property.OriginalValue != null && property.CurrentValue != null &&
                 property.OriginalValue.Equals(property.CurrentValue))
                 property.IsModified = false;
-
-            if (property.Metadata.PropertyInfo == null)
-            {
-            }
         }
+
+
+
+        //
+        //
+        // foreach (var property in entry.Properties)
+        // {
+        //     if (property?.OriginalValue == null && property?.CurrentValue == null) property.IsModified = true;
+        //
+        //     if (property is { IsModified: true, CurrentValue: null, OriginalValue: not null })
+        //         property.IsModified = true;
+        //
+        //     if (property is { IsModified: true, CurrentValue: null, OriginalValue: null })
+        //         property.IsModified = false;
+        //
+        //     if (property.IsModified && property?.OriginalValue == property?.CurrentValue) property.IsModified = false;
+        //
+        //     if (property.IsModified && property is { OriginalValue: not null, CurrentValue: not null } &&
+        //         property.OriginalValue.Equals(property.CurrentValue))
+        //         property.IsModified = false;
+        //
+        //     if (property.Metadata.PropertyInfo == null)
+        //     {
+        //     }
+        // }
 
         await SaveChangesAsync();
         entry.State = EntityState.Detached;

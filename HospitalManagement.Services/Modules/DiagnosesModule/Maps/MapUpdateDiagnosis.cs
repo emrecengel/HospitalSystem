@@ -18,9 +18,10 @@ internal class MapUpdateDiagnosisConverter : ITypeConverter<UpdateDiagnosis, Dia
 {
     public Diagnosis Convert(UpdateDiagnosis source, Diagnosis destination, ResolutionContext context)
     {
-        return new Diagnosis
-        {
-            Name = source.Name
-        };
+      destination = destination ?? new Diagnosis();
+      destination.Name = source.Name;
+
+      return destination;
+
     }
 }

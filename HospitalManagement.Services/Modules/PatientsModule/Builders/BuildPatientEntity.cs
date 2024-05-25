@@ -18,6 +18,7 @@ internal class BuildPatientEntity : IEntityTypeConfiguration<Patient>
         builder.Property(x => x.BloodType).IsRequired();
         builder.Property(x => x.Gender).IsRequired();
         builder.Property(x => x.DateOfBirth).IsRequired();
+        builder.Property(x => x.UserId).IsRequired(false);
 
         builder.HasMany(x => x.Appointments).WithOne().HasForeignKey(x => x.PatientId).IsRequired();
         builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired(false);

@@ -18,14 +18,16 @@ internal class MapUpdateAppointmentConverter : ITypeConverter<UpdateAppointment,
 {
     public Appointment Convert(UpdateAppointment source, Appointment destination, ResolutionContext context)
     {
-        return new Appointment
-        {
-            PatientId = source.PatientId,
-            DoctorId = source.DoctorId,
-            AppointmentOn = source.AppointmentOn,
-            Reason = source.Reason,
-            Duration = source.Duration,
-            OutComeDiagnosisId = source.OutComeDiagnosisId
-        };
+        destination ??= new Appointment();
+
+        destination.PatientId = source.PatientId;
+        destination.DoctorId = source.DoctorId;
+        destination.AppointmentOn = source.AppointmentOn;
+        destination.Reason = source.Reason;
+        destination.Duration = source.Duration;
+        destination.OutComeDiagnosisId = source.OutComeDiagnosisId;
+
+
+        return destination;
     }
 }
