@@ -18,6 +18,7 @@ public class UpdatePatient : IRequest<Unit>
     public string BloodType { get; set; }
     public string Gender { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public int? UserId { get; set; }
 
     public UpdatePatient UseId(int value)
     {

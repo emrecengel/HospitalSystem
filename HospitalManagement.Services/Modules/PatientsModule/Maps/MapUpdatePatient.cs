@@ -26,7 +26,9 @@ internal class MapUpdatePatientConverter : ITypeConverter<UpdatePatient, Patient
             EmailAddress = source.EmailAddress,
             Address = source.Address,
             BloodType = source.BloodType,
-            DateOfBirth = source.DateOfBirth
+            DateOfBirth = source.DateOfBirth,
+            UserId = source.UserId,
+            Gender = source.Gender
         };
     }
 }
