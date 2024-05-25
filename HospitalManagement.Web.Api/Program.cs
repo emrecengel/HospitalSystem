@@ -53,14 +53,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 // Add CORS services
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        builder => builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-});
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -78,7 +71,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAll");
+app.UseCors(x => x.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("*").AllowCredentials());
 
 app.UseHttpsRedirection();
 app.UseRequestLocalization(new RequestLocalizationOptions
