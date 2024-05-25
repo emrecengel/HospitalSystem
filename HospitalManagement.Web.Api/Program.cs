@@ -71,7 +71,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(x => x.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("*").AllowCredentials());
+app.UseCors(x => x.WithOrigins("http://hospitalmanagement.web.ui", "http://localhost:3000").AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("*").AllowCredentials());
 
 app.UseHttpsRedirection();
 app.UseRequestLocalization(new RequestLocalizationOptions
