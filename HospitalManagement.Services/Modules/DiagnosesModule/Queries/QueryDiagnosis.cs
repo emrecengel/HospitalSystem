@@ -10,6 +10,7 @@ namespace HospitalManagement.Services.Modules.DiagnosesModule.Queries;
 public sealed class QueryDiagnosis : IRequest<List<Diagnosis>>, IFilterableRequest, IPageableRequest
 {
     internal Func<IQueryable<Diagnosis>, IQueryable<Diagnosis>>? Query { get; set; }
+    public int[]? SymptomIds { get; set; }
 
     public string? Filter { get; set; }
     public string? OrderBy { get; set; }
@@ -34,6 +35,9 @@ internal sealed class HandleQueryDiagnosis(
 
         if (request.Query != null) query = request.Query(query);
 
+
+        if (request.SymptomIds != null)
+            query = query.Where(x => x.Symptoms.Any(y => request.SymptomIds.Contains(y.SymptomId))).OrderByDescending(x=> x.Symptoms.Count());
 
         query = query.ApplyStringFilters(request);
 

@@ -11,6 +11,11 @@ internal class BuildDiagnosisEntity : IEntityTypeConfiguration<Diagnosis>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name).IsRequired();
 
+        builder.HasMany(x => x.Symptoms)
+            .WithOne(x => x.Diagnosis)
+            .HasForeignKey(x => x.DiagnosisId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.ToTable("diagnoses");
     }
 }

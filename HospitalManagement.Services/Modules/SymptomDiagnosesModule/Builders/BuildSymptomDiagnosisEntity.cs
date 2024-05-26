@@ -12,6 +12,17 @@ internal class BuildSymptomDiagnosisEntity : IEntityTypeConfiguration<SymptomDia
         builder.Property(x => x.SymptomId).IsRequired();
         builder.Property(x => x.DiagnosisId).IsRequired();
 
+        builder.HasOne(x => x.Symptom)
+            .WithMany(x => x.Diagnoses)
+            .HasForeignKey(x => x.SymptomId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(x => x.Diagnosis)
+            .WithMany(x => x.Symptoms)
+            .HasForeignKey(x => x.DiagnosisId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
         builder.ToTable("symptom_diagnoses");
     }
 }
