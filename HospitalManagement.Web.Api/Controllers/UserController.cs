@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Services.Modules.UsersModule.Commands;
+﻿using HospitalManagement.Services.Modules.UserRolesModule.Queries;
+using HospitalManagement.Services.Modules.UsersModule.Commands;
 using HospitalManagement.Services.Modules.UsersModule.Models;
 using HospitalManagement.Services.Modules.UsersModule.Queries;
 using MediatR;
@@ -63,6 +64,18 @@ public class UserController(
     {
         await mediator.Send(command.UseId(id));
         return NoContent();
+    }
+
+
+    [HttpGet("{id:int}/role")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update([FromRoute] int id)
+    {
+        
+        var query = new QueryUserRole().ByQuery(q => q.Where(x => x.UserId == id));
+
+        return Ok(await mediator.Send(query));
     }
 
     [HttpPost("{id:int}/Role/{roleId:int}")]
