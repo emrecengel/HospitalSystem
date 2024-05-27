@@ -24,6 +24,7 @@ internal class UpdateMapDoctorConverter : ITypeConverter<UpdateDoctor, Doctor>
         destination.LastName = source.LastName;
         destination.Specialization = source.Specialization;
         destination.Availability = source.Availability;
+        destination.UserId = source.UserId;
 
         return destination;
     }
