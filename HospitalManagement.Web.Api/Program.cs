@@ -67,13 +67,11 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
-app.UseCors(x => x.WithOrigins("http://hospitalmanagement.web.ui", "http://localhost:3000").AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("*").AllowCredentials());
+
+app.UseCors(x => x.WithOrigins("http://hospitalmanagement.web.ui", "http://localhost:3000", "https://agreeable-desert-00b60f00f-preview.eastus2.5.azurestaticapps.net").AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("*").AllowCredentials());
 
 app.UseHttpsRedirection();
 app.UseRequestLocalization(new RequestLocalizationOptions

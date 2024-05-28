@@ -1,4 +1,5 @@
-﻿using HospitalManagement.Services.DatabaseRepository;
+﻿using Azure.Core;
+using HospitalManagement.Services.DatabaseRepository;
 using HospitalManagement.Services.Extensions;
 using HospitalManagement.Services.Modules.DiagnosesModule.Models;
 using HospitalManagement.Services.RequestTypes;
@@ -29,7 +30,7 @@ public sealed class QueryDiagnosis : IRequest<List<Diagnosis>>, IFilterableReque
 internal sealed class HandleQueryDiagnosis(
     IRepository<Diagnosis> repository) : IRequestHandler<QueryDiagnosis, List<Diagnosis>>
 {
-    public Task<List<Diagnosis>> Handle(QueryDiagnosis request, CancellationToken cancellationToken)
+    public async Task<List<Diagnosis>> Handle(QueryDiagnosis request, CancellationToken cancellationToken)
     {
         var query = repository.Query;
 
@@ -37,10 +38,35 @@ internal sealed class HandleQueryDiagnosis(
 
 
         if (request.SymptomIds != null)
-            query = query.Where(x => x.Symptoms.Any(y => request.SymptomIds.Contains(y.SymptomId))).OrderByDescending(x=> x.Symptoms.Count());
+            query = query.Where(x => x.Symptoms.Any(y => request.SymptomIds.Contains(y.SymptomId))).OrderByDescending(x => x.Symptoms.Count()).Include(x=> x.Symptoms);
 
         query = query.ApplyStringFilters(request);
 
-        return query.ToListAsync(cancellationToken);
+        var diagnosis = await query.ToListAsync(cancellationToken);
+
+        if (request.SymptomIds is { Length: > 0 })
+        {
+            // var symptomIdSet = new HashSet<int>(request.SymptomIds);
+            //
+
+            diagnosis.ForEach(x =>
+            {
+                var symptomIdSet = x.Symptoms.Where(y=> request.SymptomIds.Contains(y.SymptomId));
+
+                if (x.Symptoms is { Count: > 0 })
+                {
+                  
+                    x.SymptomMatchPercentage = ((double)symptomIdSet.Count() / x.Symptoms.Count()) * 100;
+                }
+                else
+                {
+                    x.SymptomMatchPercentage = 0;
+                }
+            });
+        }
+
+
+
+        return diagnosis;
     }
 }

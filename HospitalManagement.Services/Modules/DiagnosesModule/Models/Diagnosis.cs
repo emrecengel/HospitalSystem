@@ -7,5 +7,7 @@ public class Diagnosis
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public List<SymptomDiagnosis> Symptoms { get; set; }
+    public List<SymptomDiagnosis> Symptoms { get; set; } = [];
+    
+    public double SymptomMatchPercentage { get; set; }
 }

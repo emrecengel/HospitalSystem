@@ -16,6 +16,8 @@ internal class BuildDiagnosisEntity : IEntityTypeConfiguration<Diagnosis>
             .HasForeignKey(x => x.DiagnosisId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.Ignore(x => x.SymptomMatchPercentage);
+
         builder.ToTable("diagnoses");
     }
 }
